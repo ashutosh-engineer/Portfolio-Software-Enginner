@@ -8,14 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="theme-switch-wrapper">
-        <label class="theme-switch" for="theme-toggle">
-            <input type="checkbox" id="theme-toggle" />
-            <span class="slider round"></span>
-        </label>
-        <span class="theme-label">Dark Mode</span>
-    </div>
-
     <header>
         <nav>
             <div class="logo">
@@ -42,8 +34,8 @@
                 <h2>Aspiring Software Engineer</h2>
                 <p>Java DSA • MERN Stack • AI • B.Tech @ Parul University</p>
                 <div class="hero-buttons">
-                    <a href="#projects" class="btn">View My Work</a>
-                    <a href="#contact" class="btn btn-outline">Contact Me</a>
+                    <a href="https://github.com/nashutosh" target="_blank" class="btn">View My Work</a>
+                    <a href="https://www.linkedin.com/in/ashutosh-singh-7945812b2/" target="_blank" class="btn btn-outline">Contact Me</a>
                 </div>
             </div>
             <div class="hero-image">
@@ -51,6 +43,11 @@
                     <i class="fas fa-user-circle"></i>
                 </div>
             </div>
+        </div>
+        <div class="scroll-indicator">
+            <a href="#about">
+                <i class="fas fa-chevron-down"></i>
+            </a>
         </div>
     </section>
 
@@ -75,7 +72,7 @@
                     <span class="tech-tag">Node.js</span>
                     <span class="tech-tag">MongoDB</span>
                     <span class="tech-tag">Express</span>
-                    <span class="tech-tag">AI/ML</span>
+                    <span class="tech-tag">ML</span>
                     <span class="tech-tag">Docker</span>
                     <span class="tech-tag">System Design</span>
                 </div>
@@ -86,169 +83,42 @@
     <section id="featured-project" class="featured-project">
         <h2 class="section-title">Featured Project</h2>
         <div class="featured-project-container">
-            <div class="featured-project-card">
-                <div class="featured-project-content">
-                    <h3>Signify – Empowering the Deaf: Bridging Communication Gaps through Innovation</h3>
-                    <p class="award-badge">🏆 PUCode Hackathon Winner @ Parul University</p>
-                    <p class="project-description">
-                        A sign language translator using AI that converts text to sign grammar visuals, making communication simpler for the deaf community. Built entirely from scratch, our project integrates hand gestures, facial expressions, and context for a seamless experience.
-                    </p>
-                    <div class="tech-used">
-                        <span class="tech-tag">AI</span>
-                        <span class="tech-tag">Machine Learning</span>
-                        <span class="tech-tag">Computer Vision</span>
-                        <span class="tech-tag">Accessibility</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="https://signify-echelon.netlify.app/" target="_blank" class="btn">View Project</a>
-                    </div>
+            <div class="featured-project-content">
+                <h3>Signify – Empowering the Deaf: Bridging Communication Gaps through Innovation</h3>
+                <p class="award-badge">🏆 PUCode Hackathon Winner @ Parul University</p>
+                <p class="project-description">
+                    A sign language translator using AI that converts text to sign grammar visuals, making communication simpler for the deaf community. Built entirely from scratch, our project integrates hand gestures, facial expressions, and context for a seamless experience.
+                </p>
+                <div class="tech-used">
+                    <span class="tech-tag">AI</span>
+                    <span class="tech-tag">Machine Learning</span>
+                    <span class="tech-tag">Computer Vision</span>
+                    <span class="tech-tag">Accessibility</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://signify-echelon.netlify.app/" target="_blank" class="btn">View Project</a>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <section id="projects" class="projects">
-        <h2 class="section-title">GitHub Activity</h2>
-        <p class="section-description">My contributions and activity on GitHub</p>
-        <div id="github-stats-container" class="github-stats-container">
-            <!-- GitHub stats will be loaded here via JavaScript -->
-            <div class="loading">Loading GitHub stats...</div>
         </div>
     </section>
 
     <section id="coding-profiles" class="coding-profiles">
         <h2 class="section-title">Coding Profiles</h2>
         <div class="profiles-container">
-            <div class="profile-card" id="leetcode-profile">
-                <div class="profile-header">
-                    <i class="fas fa-code profile-icon"></i>
-                    <h3>LeetCode</h3>
-                </div>
-                <div class="profile-stats">
-                    <div class="stat">
-                        <span class="stat-label">Username:</span>
-                        <span class="stat-value">Ashu054</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-label">Problems Solved:</span>
-                        <span class="stat-value" id="leetcode-solved">Loading...</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-label">Rating:</span>
-                        <span class="stat-value" id="leetcode-rating">Loading...</span>
-                    </div>
-                    <div class="leetcode-distribution">
-                        <div class="difficulty-bar">
-                            <div class="difficulty-label">Easy:</div>
-                            <div class="progress-container">
-                                <div class="progress-bar easy" id="leetcode-easy-progress"></div>
-                                <span class="progress-text" id="leetcode-easy-text">0/0</span>
-                            </div>
-                        </div>
-                        <div class="difficulty-bar">
-                            <div class="difficulty-label">Medium:</div>
-                            <div class="progress-container">
-                                <div class="progress-bar medium" id="leetcode-medium-progress"></div>
-                                <span class="progress-text" id="leetcode-medium-text">0/0</span>
-                            </div>
-                        </div>
-                        <div class="difficulty-bar">
-                            <div class="difficulty-label">Hard:</div>
-                            <div class="progress-container">
-                                <div class="progress-bar hard" id="leetcode-hard-progress"></div>
-                                <span class="progress-text" id="leetcode-hard-text">0/0</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <a href="https://leetcode.com/Ashu054/" target="_blank" class="profile-link">View Profile</a>
-            </div>
-            
-            <div class="profile-card" id="codeforces-profile">
-                <div class="profile-header">
-                    <i class="fas fa-laptop-code profile-icon"></i>
-                    <h3>Codeforces</h3>
-                </div>
-                <div class="profile-stats">
-                    <div class="stat">
-                        <span class="stat-label">Username:</span>
-                        <span class="stat-value">ashutoshsingh6376</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-label">Rating:</span>
-                        <span class="stat-value" id="codeforces-rating">Loading...</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-label">Rank:</span>
-                        <span class="stat-value" id="codeforces-rank">Loading...</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-label">Problems Solved:</span>
-                        <span class="stat-value" id="codeforces-solved">Loading...</span>
-                    </div>
-                    <div id="codeforces-rating-chart" class="chart-container">
-                        <!-- Rating chart will be rendered here -->
-                    </div>
-                    <div id="codeforces-problem-chart" class="chart-container">
-                        <!-- Problem distribution chart will be rendered here -->
-                    </div>
-                </div>
-                <a href="https://codeforces.com/profile/ashutoshsingh6376" target="_blank" class="profile-link">View Profile</a>
-            </div>
+            <a href="https://github.com/nashutosh" target="_blank" class="profile-link">
+                <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" class="profile-logo github-logo">
+                <span>GitHub</span>
+            </a>
+            <a href="https://leetcode.com/Ashu054/" target="_blank" class="profile-link">
+                <img src="https://assets.leetcode.com/static_assets/public/icons/favicon-192x192.png" alt="LeetCode Logo" class="profile-logo leetcode-logo">
+                <span>LeetCode</span>
+            </a>
+            <a href="https://codeforces.com/profile/ashutoshsingh6376" target="_blank" class="profile-link">
+                <img src="https://codeforces.org/s/0/android-icon-192x192.png" alt="CodeForces Logo" class="profile-logo codeforces-logo">
+                <span>CodeForces</span>
+            </a>
         </div>
     </section>
-
-    <section id="contact" class="contact">
-        <h2 class="section-title">Contact Me</h2>
-        <div class="contact-container">
-            <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <a href="mailto:contact@ashutoshsingh.com">contact@ashutoshsingh.com</a>
-                </div>
-                <div class="contact-item">
-                    <i class="fab fa-linkedin"></i>
-                    <a href="https://www.linkedin.com/in/ashutosh-singh-7945812b2/" target="_blank">LinkedIn</a>
-                </div>
-                <div class="contact-item">
-                    <i class="fab fa-github"></i>
-                    <a href="https://github.com/nashutosh" target="_blank">GitHub</a>
-                </div>
-            </div>
-            
-            <div class="contact-form">
-                <form id="contact-form">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="btn">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 Ashutosh Singh. All Rights Reserved.</p>
-            <div class="social-links">
-                <a href="https://www.linkedin.com/in/ashutosh-singh-7945812b2/" target="_blank">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-                <a href="https://github.com/nashutosh" target="_blank">
-                    <i class="fab fa-github"></i>
-                </a>
-            </div>
-        </div>
-    </footer>
 
     <script src="script.js"></script>
 </body>
