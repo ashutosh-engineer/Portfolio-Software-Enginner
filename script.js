@@ -10,6 +10,89 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Add tooltip data attributes from alt text for certification logos
+    document.querySelectorAll('.cert-item img').forEach(img => {
+        const altText = img.getAttribute('alt');
+        img.parentElement.setAttribute('data-tooltip', altText);
+    });
+
+    // Featured Projects Carousel Functionality
+    const projectCards = document.querySelectorAll('.project-card');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const dots = document.querySelectorAll('.dot');
+    let currentIndex = 0;
+    
+    // Project expansion functionality
+    document.querySelectorAll('.project-preview').forEach(preview => {
+        preview.addEventListener('click', function() {
+            const projectCard = this.closest('.project-card');
+            const details = projectCard.querySelector('.project-details');
+            
+            if (details.style.display === 'block') {
+                details.style.display = 'none';
+                this.classList.remove('expanded');
+            } else {
+                details.style.display = 'block';
+                this.classList.add('expanded');
+            }
+        });
+    });
+    
+    document.querySelectorAll('.expand-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const projectCard = this.closest('.project-card');
+            const details = projectCard.querySelector('.project-details');
+            const preview = projectCard.querySelector('.project-preview');
+            
+            details.style.display = 'block';
+            preview.classList.add('expanded');
+        });
+    });
+    
+    document.querySelectorAll('.collapse-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const projectCard = this.closest('.project-card');
+            const details = projectCard.querySelector('.project-details');
+            const preview = projectCard.querySelector('.project-preview');
+            
+            details.style.display = 'none';
+            preview.classList.remove('expanded');
+        });
+    });
+    
+    // Carousel navigation functionality
+    function showProject(index) {
+        projectCards.forEach((card, i) => {
+            card.style.display = i === index ? 'block' : 'none';
+        });
+        
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+        });
+        
+        currentIndex = index;
+    }
+    
+    if (prevBtn && nextBtn) {
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + projectCards.length) % projectCards.length;
+            showProject(currentIndex);
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % projectCards.length;
+            showProject(currentIndex);
+        });
+    }
+    
+    dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+            showProject(i);
+        });
+    });
+
     // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
