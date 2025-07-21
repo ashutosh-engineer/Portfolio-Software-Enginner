@@ -870,6 +870,166 @@ nav {
 
 /* Media Queries */
 
+/* Internships Section */
+.internships {
+    padding: 5rem 1rem;
+    padding-top: 120px; /* Extra padding for fixed header */
+    background-color: var(--bg-color); /* Changed to match main background */
+    position: relative;
+}
+
+.internships-container {
+    max-width: 1000px;
+    margin: 3rem auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.internship-card {
+    background-color: var(--bg-color);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    display: flex;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.internship-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.company-logo {
+    flex: 0 0 180px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.03);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.styled-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    padding: 1rem;
+    text-align: center;
+}
+
+.nms-logo {
+    background: linear-gradient(135deg, #3d4b75, #6d8eff);
+}
+
+.ineuron-logo {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+}
+
+.logo-text {
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 1px;
+    margin-bottom: 0.3rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.logo-subtext {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 0.5px;
+}
+
+.internship-card:hover .styled-logo {
+    transform: scale(1.05);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+.company-img {
+    width: 100%;
+    max-width: 120px;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(20%);
+    transition: filter 0.3s ease;
+}
+
+.internship-card:hover .company-img {
+    filter: grayscale(0%);
+}
+
+.internship-details {
+    flex: 1;
+    padding: 1.5rem 2rem;
+}
+
+.internship-details h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.internship-tag {
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.2rem 0.8rem;
+    background-color: var(--secondary-color);
+    color: white;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.company-name {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    font-weight: 400;
+}
+
+.internship-description {
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.internship-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .internship-card {
+        flex-direction: column;
+    }
+    
+    .company-logo {
+        flex: 0;
+        padding: 2rem;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .company-img {
+        max-width: 100px;
+    }
+}
+
 /* Chart and Progress Bar Styles */
 .leetcode-distribution {
     margin-top: 1.5rem;
