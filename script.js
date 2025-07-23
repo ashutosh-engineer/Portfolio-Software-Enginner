@@ -52,8 +52,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize animations for elements
     initAnimations();
     
-    // Initialize news ticker
+    // Duplicate news ticker items
     initNewsTicker();
+    
+    // Initialize events modal
+    initEventsModal();
     
     // Fetch GitHub avatar
     fetchGitHubData();
@@ -275,70 +278,10 @@ function initAnimations() {
     }
 }
 
-// News ticker items with dates for priority sorting
-const newsItems = [
-    {
-        icon: 'fas fa-code-branch',
-        text: 'Contributed to <a href="https://github.com/OWASP/OpenCRE/pulls?q=is%3Apr+author%3Anashutosh" target="_blank" rel="noopener noreferrer">OWASP Foundation OpenCRE project (GSoC)</a> - Resolved issue #614',
-        date: '2025-07-21',
-        priority: 10 // Highest priority to show first
-    }
-];
-
-// Function to initialize the news ticker with priority queue
+// Function to initialize news ticker
 function initNewsTicker() {
     const tickerContent = document.querySelector('.news-ticker-content');
     if (!tickerContent) return;
-    
-    // News items with priority (higher number = higher priority)
-    // Also ordered by date - newest will be shown first when priorities are equal
-    const newsItems = [
-        {
-            text: 'Contributed to OWASP Foundation OpenCRE project (<a href="https://github.com/OWASP/OpenCRE/pulls" target="_blank">GSoC</a>) resolving issue <strong>#614</strong>',
-            date: '2025-07-21',
-            priority: 10,
-            icon: 'fas fa-code-branch'
-        }
-    ];
-    
-    // Sort by priority (high to low) and then by date (newest to oldest)
-    const sortedItems = [...newsItems].sort((a, b) => {
-        // First sort by priority
-        if (a.priority !== b.priority) {
-            return b.priority - a.priority;
-        }
-        
-        // If priorities are equal, sort by date
-        return new Date(b.date) - new Date(a.date);
-    });
-    
-    // Add sorted items to the ticker
-    sortedItems.forEach(item => {
-        const tickerItem = document.createElement('span');
-        tickerItem.className = 'ticker-item';
-        
-        // Add icon
-        const iconElement = document.createElement('i');
-        iconElement.className = item.icon;
-        tickerItem.appendChild(iconElement);
-        
-        // Add a space after icon
-        tickerItem.appendChild(document.createTextNode(' '));
-        
-        // Add the text content
-        const textContainer = document.createElement('span');
-        textContainer.innerHTML = item.text;
-        tickerItem.appendChild(textContainer);
-        
-        // Add date
-        const dateSpan = document.createElement('span');
-        dateSpan.className = 'ticker-date';
-        dateSpan.textContent = formatDate(item.date);
-        
-        tickerItem.appendChild(dateSpan);
-        
-        tickerContent.appendChild(tickerItem);
-    });
     
     // Clone items for continuous scrolling
     const originalItems = Array.from(tickerContent.children);
@@ -347,11 +290,58 @@ function initNewsTicker() {
         tickerContent.appendChild(clone);
     });
     
-    // Adjust animation speed based on content length
-    const tickerWidth = tickerContent.offsetWidth;
-    const animationDuration = Math.max(20, tickerWidth / 50);
+    // Set animation speed based on content length (faster)
+    const totalWidth = tickerContent.scrollWidth;
+    const animationDuration = Math.max(15, totalWidth / 120); // Faster speed
     tickerContent.style.animationDuration = `${animationDuration}s`;
 }
+
+// Function to initialize events modal
+function initEventsModal() {
+    const modal = document.getElementById('events-modal');
+    const whatsNewLabel = document.getElementById('whats-new-label');
+    const closeModal = document.querySelector('.close-modal');
+    
+    if (!modal || !whatsNewLabel || !closeModal) return;
+    
+    // Add data-label attributes to table cells for mobile view
+    const tableCells = document.querySelectorAll('.events-table tbody td');
+    const headerTexts = Array.from(document.querySelectorAll('.events-table th')).map(th => th.textContent);
+    
+    tableCells.forEach((cell, index) => {
+        const headerIndex = index % headerTexts.length;
+        cell.setAttribute('data-label', headerTexts[headerIndex]);
+    });
+    
+    // Open modal when clicking on What's New label
+    whatsNewLabel.addEventListener('click', () => {
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+    });
+    
+    // Close modal when clicking on X button
+    closeModal.addEventListener('click', () => {
+        modal.classList.remove('show');
+        document.body.style.overflow = ''; // Restore scrolling
+    });
+    
+    // Close modal when clicking outside the modal content
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('show');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+    });
+    
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('show')) {
+            modal.classList.remove('show');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+    });
+}
+
 
 // Format a date string
 function formatDate(dateString) {
