@@ -5,14 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ashutosh Singh | Software Engineer</title>
     
-    <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' https://github.com https://paruluniversity.ac.in https://images.unsplash.com https://ghchart.rshah.org https://github-readme-stats.vercel.app https://cdn.jsdelivr.net data:; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self' https://api.github.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;">
-    <meta http-equiv="X-Frame-Options" content="DENY">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()">
-    <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload">
-    
     <!-- Cache Control -->
     <meta http-equiv="Cache-Control" content="no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -36,16 +28,16 @@
     <meta name="twitter:image" content="https://github.com/nashutosh.png">
     
     <!-- Preload Key Resources -->
-    <link rel="preload" href="styles.css?v=1.0.0" as="style" crossorigin="anonymous">
-    <link rel="preload" href="https://github.com/nashutosh.png" as="image" crossorigin="anonymous">
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="styles.css?v=1.0.0" as="style">
+    <link rel="preload" href="https://github.com/nashutosh.png" as="image">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2" as="font" type="font/woff2">
     
     <!-- Favicon with fallback -->
     <link rel="icon" type="image/png" href="https://github.com/nashutosh.png" onerror="this.onerror=null;this.href='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨‍💻</text></svg>';">
     
-    <!-- CSS with Subresource Integrity -->
+    <!-- CSS -->
     <link rel="stylesheet" href="styles.css?v=1.0.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Critical CSS for fastest rendering -->
     <style>
@@ -93,20 +85,6 @@
       "knowsAbout": ["Java", "DSA", "MERN Stack", "AI", "Web Development", "Software Engineering"]
     }
     </script>
-    
-    <!-- Service worker registration with version -->
-    <script>
-        // Register service worker for better cache control
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js?v=1.0.0').then(registration => {
-                    console.log('ServiceWorker registered with scope:', registration.scope);
-                }).catch(error => {
-                    console.log('ServiceWorker registration failed:', error);
-                });
-            });
-        }
-    </script>
 </head>
 <body>
     <header>
@@ -142,9 +120,9 @@
                 </div>
             </div>
             <div class="hero-image">
-                <a href="https://www.linkedin.com/in/ashutosh-singh-7945812b2/" target="_blank" rel="noopener noreferrer" class="profile-img-placeholder">
-                    <img src="/images/1746009643175.jpeg" alt="Ashutosh Singh" loading="lazy">
-                </a>
+                <div class="profile-img-placeholder">
+                    <i class="fas fa-user-circle"></i>
+                </div>
             </div>
         </div>
         <div class="scroll-indicator">
