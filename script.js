@@ -290,10 +290,45 @@ function initNewsTicker() {
         tickerContent.appendChild(clone);
     });
     
-    // Set animation speed based on content length (faster)
+    // Set animation speed based on screen width and content length
     const totalWidth = tickerContent.scrollWidth;
-    const animationDuration = Math.max(15, totalWidth / 120); // Faster speed
+    const isMobile = window.innerWidth <= 768;
+    
+    // Slower animation for mobile to ensure all items are visible
+    const animationDuration = isMobile 
+        ? Math.max(25, totalWidth / 60) // Slower on mobile
+        : Math.max(15, totalWidth / 120); // Faster on desktop
+    
     tickerContent.style.animationDuration = `${animationDuration}s`;
+    
+    // Ensure ticker content has proper width and spacing
+    if (isMobile) {
+        // Add extra spacing on mobile between items
+        const tickerItems = tickerContent.querySelectorAll('.ticker-item');
+        tickerItems.forEach(item => {
+            item.style.marginRight = '200px'; // More spacing on mobile
+            item.style.paddingLeft = '15px';
+            item.style.paddingRight = '15px';
+        });
+    }
+    
+    // Handle window resize events to adjust animation speed
+    window.addEventListener('resize', () => {
+        const newIsMobile = window.innerWidth <= 768;
+        const newDuration = newIsMobile 
+            ? Math.max(25, tickerContent.scrollWidth / 60)
+            : Math.max(15, tickerContent.scrollWidth / 120);
+            
+        tickerContent.style.animationDuration = `${newDuration}s`;
+        
+        // Update spacing on resize
+        const tickerItems = tickerContent.querySelectorAll('.ticker-item');
+        tickerItems.forEach(item => {
+            item.style.marginRight = newIsMobile ? '200px' : '120px';
+            item.style.paddingLeft = newIsMobile ? '15px' : '';
+            item.style.paddingRight = newIsMobile ? '15px' : '';
+        });
+    });
 }
 
 // Function to initialize events modal
@@ -313,16 +348,31 @@ function initEventsModal() {
         cell.setAttribute('data-label', headerTexts[headerIndex]);
     });
     
-    // Open modal when clicking on What's New label
-    whatsNewLabel.addEventListener('click', () => {
+    // Helper function to open modal
+    const openModalFunction = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         modal.classList.add('show');
         document.body.style.overflow = 'hidden'; // Prevent scrolling
-    });
+        console.log('Modal opened');
+    };
+    
+    // Open modal when clicking on What's New label (multiple event types for better mobile support)
+    whatsNewLabel.addEventListener('click', openModalFunction);
+    whatsNewLabel.addEventListener('touchstart', openModalFunction, {passive: false});
+    
+    // Make sure the entire label area is clickable
+    const labelSpan = whatsNewLabel.querySelector('span');
+    if (labelSpan) {
+        labelSpan.addEventListener('click', openModalFunction);
+        labelSpan.addEventListener('touchstart', openModalFunction, {passive: false});
+    }
     
     // Close modal when clicking on X button
     closeModal.addEventListener('click', () => {
         modal.classList.remove('show');
         document.body.style.overflow = ''; // Restore scrolling
+        console.log('Modal closed via X button');
     });
     
     // Close modal when clicking outside the modal content
@@ -330,6 +380,7 @@ function initEventsModal() {
         if (e.target === modal) {
             modal.classList.remove('show');
             document.body.style.overflow = ''; // Restore scrolling
+            console.log('Modal closed via outside click');
         }
     });
     
@@ -338,6 +389,7 @@ function initEventsModal() {
         if (e.key === 'Escape' && modal.classList.contains('show')) {
             modal.classList.remove('show');
             document.body.style.overflow = ''; // Restore scrolling
+            console.log('Modal closed via Escape key');
         }
     });
 }

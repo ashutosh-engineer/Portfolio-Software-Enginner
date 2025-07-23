@@ -414,11 +414,30 @@ nav {
     
     .news-ticker-label {
         width: 100%;
-        padding: 8px 15px;
+        padding: 12px 15px;
+        position: relative;
+        z-index: 20;
+        border-radius: 0;
     }
     
     .news-ticker-label::after {
         display: none;
+    }
+    
+    /* Add an explicit tap/click indicator for mobile */
+    .news-ticker-label::before {
+        content: '\f0a9'; /* Font Awesome arrow icon */
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        margin-right: 8px;
+        font-size: 0.9rem;
+    }
+    
+    .news-ticker-label span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
     }
     
     .ticker-item {
@@ -2035,15 +2054,52 @@ nav {
     
     .news-ticker-label {
         width: 100%;
-        padding: 8px 15px;
+        padding: 12px 15px;
+        position: relative;
+        z-index: 20;
+        border-radius: 0;
     }
     
     .news-ticker-label::after {
         display: none;
     }
     
+    /* Add an explicit tap/click indicator for mobile */
+    .news-ticker-label::before {
+        content: '\f0a9'; /* Font Awesome arrow icon */
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        margin-right: 8px;
+        font-size: 0.9rem;
+    }
+    
+    .news-ticker-label span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+    
+    /* Ensure ticker items are visible on mobile */
     .ticker-item {
         font-size: 0.85rem;
+        white-space: normal;
+        display: inline-block;
+        padding: 5px 0;
+        line-height: 1.4;
+    }
+    
+    /* Ensure proper display of ticker content on mobile */
+    .news-ticker {
+        padding: 15px 0;
+        overflow-x: hidden;
+    }
+    
+    /* Ensure the ticker content stays visible */
+    .news-ticker-content {
+        animation-duration: 30s !important;
+        display: flex;
+        align-items: center;
     }
     
     .modal-content {
