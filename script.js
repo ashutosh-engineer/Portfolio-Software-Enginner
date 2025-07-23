@@ -1,14 +1,36 @@
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Mobile Menu Toggle
+    // Mobile Menu Toggle with improved functionality
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
     
     if (menuToggle) {
         menuToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+            
+            // Toggle body scroll when menu is open
+            if (navLinks.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (navLinks.classList.contains('active') && 
+                !navLinks.contains(e.target) && 
+                !menuToggle.contains(e.target)) {
+                navLinks.classList.remove('active');
+                menuToggle.classList.remove('active');
+                document.body.style.overflow = '';
+            }
         });
     }
+
+    // Initialize news ticker with priority system
+    initNewsTicker();
 
     // Add tooltip data attributes from alt text for certification logos
     document.querySelectorAll('.cert-item img').forEach(img => {
@@ -131,11 +153,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Fetch GitHub avatar
-    fetchGitHubAvatar();
+    // Fetch GitHub avatar and stats
+    fetchGitHubData();
 
     // Add animation to elements when they come into view
-    const observedElements = document.querySelectorAll('.project-card, .profile-link, .tech-tag, .featured-project-card');
+    const observedElements = document.querySelectorAll('.project-card, .profile-link, .tech-tag, .featured-project-card, .github-stat-card');
     
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -156,8 +178,125 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Function to fetch GitHub avatar for profile image
-async function fetchGitHubAvatar() {
+// News ticker items with dates for priority sorting
+const newsItems = [
+    {
+        icon: 'fas fa-code-branch',
+        text: 'Contributed to <a href="https://github.com/OWASP/OpenCRE/pulls?q=is%3Apr+author%3Anashutosh" target="_blank" rel="noopener noreferrer">OWASP Foundation OpenCRE project (GSoC)</a> - Resolved issue #614',
+        date: '2025-07-21',
+        priority: 10 // Highest priority to show first
+    }
+];
+
+// Function to initialize the news ticker with priority queue
+function initNewsTicker() {
+    const tickerContent = document.querySelector('.news-ticker-content');
+    if (!tickerContent) return;
+    
+    // Clear existing content
+    tickerContent.innerHTML = '';
+    
+    // Sort news items by date (newest first) and priority
+    const sortedItems = [...newsItems].sort((a, b) => {
+        // First sort by priority (higher number means higher priority)
+        if (a.priority !== b.priority) {
+            return b.priority - a.priority;
+        }
+        // If same priority, sort by date (newer first)
+        return new Date(b.date) - new Date(a.date);
+    });
+    
+    // Add sorted items to the ticker with security measures
+    sortedItems.forEach(item => {
+        const tickerItem = document.createElement('span');
+        tickerItem.className = 'ticker-item';
+        
+        // Safely add icon
+        const iconElement = document.createElement('i');
+        iconElement.className = sanitizeInput(item.icon);
+        tickerItem.appendChild(iconElement);
+        
+        // Add a space after icon
+        tickerItem.appendChild(document.createTextNode(' '));
+        
+        // Add the text content - using a container for HTML content
+        const textContainer = document.createElement('span');
+        textContainer.innerHTML = sanitizeHTML(item.text);
+        tickerItem.appendChild(textContainer);
+        
+        // Add date
+        const dateSpan = document.createElement('span');
+        dateSpan.className = 'ticker-date';
+        dateSpan.textContent = formatDate(item.date);
+        tickerItem.appendChild(dateSpan);
+        
+        tickerContent.appendChild(tickerItem);
+    });
+    
+    // Clone items for continuous scrolling
+    const originalItems = Array.from(tickerContent.children);
+    originalItems.forEach(item => {
+        const clone = item.cloneNode(true);
+        tickerContent.appendChild(clone);
+    });
+    
+    // Adjust animation speed based on content length
+    const tickerWidth = tickerContent.offsetWidth;
+    const animationDuration = Math.max(20, tickerWidth / 50);
+    tickerContent.style.animationDuration = `${animationDuration}s`;
+}
+
+// Helper function to format dates
+function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'short' };
+    const date = new Date(dateString);
+    return date.toLocaleDateString(undefined, options);
+}
+
+// Security helper functions
+function sanitizeInput(input) {
+    // Basic sanitization for CSS classes
+    return input.replace(/[^\w\s-]/g, '');
+}
+
+function sanitizeHTML(html) {
+    // Only allow specific tags and attributes
+    const allowedTags = ['a', 'b', 'i', 'strong', 'em'];
+    const allowedAttributes = {
+        'a': ['href', 'target', 'rel']
+    };
+    
+    // Create temporary element
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+    
+    // Process all nodes
+    Array.from(temp.querySelectorAll('*')).forEach(element => {
+        // Remove disallowed tags
+        if (!allowedTags.includes(element.tagName.toLowerCase())) {
+            element.outerHTML = element.innerHTML;
+            return;
+        }
+        
+        // Remove disallowed attributes
+        Array.from(element.attributes).forEach(attr => {
+            const tagAllowedAttrs = allowedAttributes[element.tagName.toLowerCase()];
+            if (!tagAllowedAttrs || !tagAllowedAttrs.includes(attr.name)) {
+                element.removeAttribute(attr.name);
+            }
+        });
+        
+        // Ensure links have proper security attributes
+        if (element.tagName.toLowerCase() === 'a' && element.getAttribute('target') === '_blank') {
+            element.setAttribute('rel', 'noopener noreferrer');
+        }
+    });
+    
+    return temp.innerHTML;
+}
+
+// Function to fetch GitHub data (avatar only)
+async function fetchGitHubData() {
     const username = 'nashutosh';
     
     try {
@@ -173,9 +312,9 @@ async function fetchGitHubAvatar() {
         // Update hero image with GitHub avatar
         const profileImgPlaceholder = document.querySelector('.profile-img-placeholder');
         if (profileImgPlaceholder && profileData.avatar_url) {
-            profileImgPlaceholder.innerHTML = `<img src="${profileData.avatar_url}" alt="Profile Image" class="profile-img">`;
+            profileImgPlaceholder.innerHTML = `<img src="${profileData.avatar_url}" alt="Ashutosh Singh Profile Image" class="profile-img">`;
         }
     } catch (error) {
-        console.error('Error fetching GitHub avatar:', error);
+        console.error('Error fetching GitHub data:', error);
     }
 } 
