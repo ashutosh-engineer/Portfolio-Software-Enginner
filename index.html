@@ -8,6 +8,11 @@
     <meta name="keywords" content="Ashutosh Singh, Software Engineer, Java, DSA, MERN Stack, AI, Full Stack Developer, Web Developer">
     <meta name="author" content="Ashutosh Singh">
     
+    <!-- Cache control headers -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
     <!-- Open Graph Meta Tags for Social Media -->
     <meta property="og:title" content="Ashutosh Singh | Software Engineer">
     <meta property="og:description" content="Software Engineer specializing in Java DSA, MERN Stack, and AI">
@@ -23,8 +28,36 @@
     <!-- Favicon - Replace URL with your actual favicon -->
     <link rel="icon" type="image/png" href="https://github.com/nashutosh.png">
     
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS preload for faster loading -->
+    <link rel="preload" href="styles.css?v=1.0.0" as="style">
+    
+    <!-- CSS with cache busting version parameter -->
+    <link rel="stylesheet" href="styles.css?v=1.0.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+    
+    <!-- Critical CSS inline for fastest rendering -->
+    <style>
+        :root {
+            --primary-color: #6d8eff;
+            --secondary-color: #3d4b75;
+            --accent-color: #ff7a7a;
+            --bg-color: #121212;
+            --text-color: #ffffff;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97') no-repeat center center/cover;
+        }
+    </style>
     
     <!-- Structured Data for SEO -->
     <script type="application/ld+json">
@@ -42,6 +75,20 @@
       ],
       "knowsAbout": ["Java", "DSA", "MERN Stack", "AI", "Web Development", "Software Engineering"]
     }
+    </script>
+    
+    <!-- Service worker registration -->
+    <script>
+        // Register service worker for better cache control
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js?v=1.0.0').then(registration => {
+                    console.log('ServiceWorker registered with scope:', registration.scope);
+                }).catch(error => {
+                    console.log('ServiceWorker registration failed:', error);
+                });
+            });
+        }
     </script>
 </head>
 <body>

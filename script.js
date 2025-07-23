@@ -1,5 +1,8 @@
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Check and update CSS version if needed
+    checkCssVersion();
+
     // Mobile Menu Toggle with improved functionality
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
@@ -177,6 +180,54 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(element);
     });
 });
+
+// CSS version management
+const CSS_VERSION = '1.0.0'; // Increment this on deployment
+const CSS_URL = 'styles.css';
+
+// Function to check and update CSS version
+function checkCssVersion() {
+    // Get stored version from localStorage
+    const storedVersion = localStorage.getItem('css_version');
+    
+    // If version is different or not set, force reload CSS
+    if (storedVersion !== CSS_VERSION) {
+        console.log('CSS version changed, updating stylesheet');
+        
+        // Force reload by appending timestamp to break cache
+        reloadCss(`${CSS_URL}?v=${CSS_VERSION}&t=${new Date().getTime()}`);
+        
+        // Store the new version
+        localStorage.setItem('css_version', CSS_VERSION);
+    }
+}
+
+// Function to force reload a CSS file
+function reloadCss(url) {
+    // Remove any existing version of the stylesheet
+    const existingLinks = document.querySelectorAll('link[rel="stylesheet"]');
+    existingLinks.forEach(link => {
+        if (link.href.includes(CSS_URL)) {
+            // Mark for replacement
+            link.setAttribute('data-to-replace', 'true');
+        }
+    });
+    
+    // Create a new stylesheet link
+    const newLink = document.createElement('link');
+    newLink.rel = 'stylesheet';
+    newLink.href = url;
+    
+    // Add onload handler to remove old stylesheet
+    newLink.onload = function() {
+        document.querySelectorAll('link[data-to-replace="true"]').forEach(oldLink => {
+            oldLink.remove();
+        });
+    };
+    
+    // Add the new stylesheet to the DOM
+    document.head.appendChild(newLink);
+}
 
 // News ticker items with dates for priority sorting
 const newsItems = [
