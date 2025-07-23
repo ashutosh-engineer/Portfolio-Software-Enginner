@@ -50,7 +50,7 @@ A modern, secure and high-performance portfolio website showcasing professional 
 - **Core Technologies**
   - HTML5 with semantic markup
   - CSS3 with modern features (Grid, Flexbox, Variables)
-  - Vanilla JavaScript with ES6+ features
+- Vanilla JavaScript with ES6+ features
   
 - **Performance & Security**
   - Service Workers for offline capabilities
