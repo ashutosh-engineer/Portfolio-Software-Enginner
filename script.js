@@ -1,13 +1,134 @@
+// Global version for cache management
+const APP_VERSION = '1.0.0';
+
+// Safe DOM manipulation helpers
+const DOM = {
+    // Create elements safely
+    createElement(tag, attributes = {}, text = '') {
+        const element = document.createElement(tag);
+        
+        // Set attributes safely
+        Object.keys(attributes).forEach(attr => {
+            if (attr.startsWith('on')) return; // Skip event handlers for security
+            element.setAttribute(attr, attributes[attr]);
+        });
+        
+        // Set text content safely (not innerHTML)
+        if (text) {
+            element.textContent = text;
+        }
+        
+        return element;
+    },
+    
+    // Append multiple child elements safely
+    appendChildren(parent, children) {
+        if (!parent || !children) return;
+        
+        children.forEach(child => {
+            if (child) parent.appendChild(child);
+        });
+        
+        return parent;
+    }
+};
+
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Check and update CSS version if needed
-    checkCssVersion();
+    // Check for version changes
+    checkAppVersion();
+    
+    // Initialize news ticker with priority system
+    initNewsTicker();
 
     // Mobile Menu Toggle with improved functionality
+    initMobileMenu();
+    
+    // Add tooltip data attributes from alt text for certification logos
+    addCertTooltips();
+    
+    // Project carousel functionality
+    initProjectCarousel();
+    
+    // Smooth scrolling for navigation
+    initSmoothScrolling();
+    
+    // Fixed header effects
+    initFixedHeader();
+    
+    // Initialize animations for elements
+    initAnimations();
+    
+    // Fetch GitHub avatar
+    fetchGitHubData();
+});
+
+// Function to check if app version has changed
+function checkAppVersion() {
+    const storedVersion = localStorage.getItem('app_version');
+    const currentVersion = window.APP_VERSION || APP_VERSION;
+    
+    // If version is different or not set
+    if (storedVersion !== currentVersion) {
+        console.log(`App version changed from ${storedVersion} to ${currentVersion}`);
+        
+        // Update CSS and JS resources
+        refreshResources();
+        
+        // Store the new version
+        localStorage.setItem('app_version', currentVersion);
+    }
+}
+
+// Function to refresh resources when version changes
+function refreshResources() {
+    // Force reload CSS
+    reloadCSS();
+    
+    // Clear any cached data
+    sessionStorage.clear();
+}
+
+// Function to reload CSS files
+function reloadCSS() {
+    const timestamp = new Date().getTime();
+    const styleSheets = document.querySelectorAll('link[rel="stylesheet"]');
+    
+    styleSheets.forEach(linkElement => {
+        // Only update local CSS files, not external CDN resources
+        if (linkElement.href.includes(window.location.origin)) {
+            const originalHref = linkElement.href.split('?')[0];
+            const newHref = `${originalHref}?v=${APP_VERSION}&t=${timestamp}`;
+            
+            // Create a new link element
+            const newLink = DOM.createElement('link', {
+                rel: 'stylesheet',
+                href: newHref,
+                type: 'text/css'
+            });
+            
+            // Add it to head
+            linkElement.parentNode.insertBefore(newLink, linkElement.nextSibling);
+            
+            // Remove the old one after the new one loads
+            newLink.onload = () => {
+                linkElement.parentNode.removeChild(linkElement);
+            };
+            
+            // If it fails to load, keep the old one
+            newLink.onerror = () => {
+                linkElement.parentNode.removeChild(newLink);
+            };
+        }
+    });
+}
+
+// Function to initialize mobile menu
+function initMobileMenu() {
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
     
-    if (menuToggle) {
+    if (menuToggle && navLinks) {
         menuToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
             menuToggle.classList.toggle('active');
@@ -31,17 +152,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+}
 
-    // Initialize news ticker with priority system
-    initNewsTicker();
-
-    // Add tooltip data attributes from alt text for certification logos
+// Function to add tooltips to certification logos
+function addCertTooltips() {
     document.querySelectorAll('.cert-item img').forEach(img => {
         const altText = img.getAttribute('alt');
-        img.parentElement.setAttribute('data-tooltip', altText);
+        if (altText) {
+            img.parentElement.setAttribute('data-tooltip', altText);
+        }
     });
+}
 
-    // Featured Projects Carousel Functionality
+// Function to initialize project carousel
+function initProjectCarousel() {
     const projectCards = document.querySelectorAll('.project-card');
     const prevBtn = document.querySelector('.prev-btn');
     const nextBtn = document.querySelector('.next-btn');
@@ -117,10 +241,12 @@ document.addEventListener('DOMContentLoaded', () => {
             showProject(i);
         });
     });
+}
 
-    // Smooth scrolling for navigation links
+// Function to initialize smooth scrolling
+function initSmoothScrolling() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
+        anchor.addEventListener('click', function(e) {
             e.preventDefault();
             
             const targetId = this.getAttribute('href');
@@ -137,96 +263,66 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 // Close mobile menu after clicking a link
-                if (navLinks.classList.contains('active')) {
+                const navLinks = document.querySelector('.nav-links');
+                const menuToggle = document.querySelector('.menu-toggle');
+                
+                if (navLinks && navLinks.classList.contains('active')) {
                     navLinks.classList.remove('active');
+                    if (menuToggle) menuToggle.classList.remove('active');
+                    document.body.style.overflow = '';
                 }
             }
         });
     });
-
-    // Fixed header adjustments
-    window.addEventListener('scroll', function() {
-        const header = document.querySelector('header');
-        if (window.scrollY > 50) {
-            header.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.5)';
-            header.style.backgroundColor = 'rgba(17, 17, 17, 0.98)';
-        } else {
-            header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.4)';
-            header.style.backgroundColor = 'rgba(17, 17, 17, 0.9)';
-        }
-    });
-
-    // Fetch GitHub avatar and stats
-    fetchGitHubData();
-
-    // Add animation to elements when they come into view
-    const observedElements = document.querySelectorAll('.project-card, .profile-link, .tech-tag, .featured-project-card, .github-stat-card');
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = 1;
-                entry.target.style.transform = entry.target.classList.contains('tech-tag') ? 
-                    'translateY(0)' : 'translateY(0)';
-            }
-        });
-    }, { threshold: 0.1 });
-    
-    observedElements.forEach(element => {
-        element.style.opacity = 0;
-        element.style.transform = element.classList.contains('tech-tag') ? 
-            'translateY(10px)' : 'translateY(20px)';
-        element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-        observer.observe(element);
-    });
-});
-
-// CSS version management
-const CSS_VERSION = '1.0.0'; // Increment this on deployment
-const CSS_URL = 'styles.css';
-
-// Function to check and update CSS version
-function checkCssVersion() {
-    // Get stored version from localStorage
-    const storedVersion = localStorage.getItem('css_version');
-    
-    // If version is different or not set, force reload CSS
-    if (storedVersion !== CSS_VERSION) {
-        console.log('CSS version changed, updating stylesheet');
-        
-        // Force reload by appending timestamp to break cache
-        reloadCss(`${CSS_URL}?v=${CSS_VERSION}&t=${new Date().getTime()}`);
-        
-        // Store the new version
-        localStorage.setItem('css_version', CSS_VERSION);
-    }
 }
 
-// Function to force reload a CSS file
-function reloadCss(url) {
-    // Remove any existing version of the stylesheet
-    const existingLinks = document.querySelectorAll('link[rel="stylesheet"]');
-    existingLinks.forEach(link => {
-        if (link.href.includes(CSS_URL)) {
-            // Mark for replacement
-            link.setAttribute('data-to-replace', 'true');
+// Function to initialize fixed header effects
+function initFixedHeader() {
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('header');
+        if (header) {
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.5)';
+                header.style.backgroundColor = 'rgba(17, 17, 17, 0.98)';
+            } else {
+                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.4)';
+                header.style.backgroundColor = 'rgba(17, 17, 17, 0.9)';
+            }
         }
     });
+}
+
+// Function to initialize animations
+function initAnimations() {
+    const observedElements = document.querySelectorAll('.project-card, .profile-link, .tech-tag, .featured-project-card, .github-stat-card');
     
-    // Create a new stylesheet link
-    const newLink = document.createElement('link');
-    newLink.rel = 'stylesheet';
-    newLink.href = url;
-    
-    // Add onload handler to remove old stylesheet
-    newLink.onload = function() {
-        document.querySelectorAll('link[data-to-replace="true"]').forEach(oldLink => {
-            oldLink.remove();
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = entry.target.classList.contains('tech-tag') ? 
+                        'translateY(0)' : 'translateY(0)';
+                    // Stop observing after animation
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        observedElements.forEach(element => {
+            element.style.opacity = 0;
+            element.style.transform = element.classList.contains('tech-tag') ? 
+                'translateY(10px)' : 'translateY(20px)';
+            element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(element);
         });
-    };
-    
-    // Add the new stylesheet to the DOM
-    document.head.appendChild(newLink);
+    } else {
+        // Fallback for browsers without IntersectionObserver
+        observedElements.forEach(element => {
+            element.style.opacity = 1;
+            element.style.transform = 'translateY(0)';
+        });
+    }
 }
 
 // News ticker items with dates for priority sorting
@@ -259,26 +355,29 @@ function initNewsTicker() {
     
     // Add sorted items to the ticker with security measures
     sortedItems.forEach(item => {
-        const tickerItem = document.createElement('span');
-        tickerItem.className = 'ticker-item';
+        const tickerItem = DOM.createElement('span', {
+            class: 'ticker-item'
+        });
         
         // Safely add icon
-        const iconElement = document.createElement('i');
-        iconElement.className = sanitizeInput(item.icon);
+        const iconElement = DOM.createElement('i', {
+            class: sanitizeInput(item.icon)
+        });
         tickerItem.appendChild(iconElement);
         
         // Add a space after icon
         tickerItem.appendChild(document.createTextNode(' '));
         
         // Add the text content - using a container for HTML content
-        const textContainer = document.createElement('span');
+        const textContainer = DOM.createElement('span');
         textContainer.innerHTML = sanitizeHTML(item.text);
         tickerItem.appendChild(textContainer);
         
         // Add date
-        const dateSpan = document.createElement('span');
-        dateSpan.className = 'ticker-date';
-        dateSpan.textContent = formatDate(item.date);
+        const dateSpan = DOM.createElement('span', {
+            class: 'ticker-date'
+        }, formatDate(item.date));
+        
         tickerItem.appendChild(dateSpan);
         
         tickerContent.appendChild(tickerItem);
@@ -346,13 +445,24 @@ function sanitizeHTML(html) {
     return temp.innerHTML;
 }
 
-// Function to fetch GitHub data (avatar only)
+// Function to fetch GitHub data (avatar only) with safety mechanisms
 async function fetchGitHubData() {
     const username = 'nashutosh';
     
     try {
-        // Fetch user profile information
-        const profileResponse = await fetch(`https://api.github.com/users/${username}`);
+        // Create AbortController for fetch timeout
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+        
+        // Fetch user profile information with timeout
+        const profileResponse = await fetch(`https://api.github.com/users/${username}`, {
+            headers: {
+                'Accept': 'application/vnd.github.v3+json'
+            },
+            signal: controller.signal
+        });
+        
+        clearTimeout(timeoutId);
         
         if (!profileResponse.ok) {
             throw new Error(`HTTP error! Status: ${profileResponse.status}`);
@@ -363,9 +473,33 @@ async function fetchGitHubData() {
         // Update hero image with GitHub avatar
         const profileImgPlaceholder = document.querySelector('.profile-img-placeholder');
         if (profileImgPlaceholder && profileData.avatar_url) {
-            profileImgPlaceholder.innerHTML = `<img src="${profileData.avatar_url}" alt="Ashutosh Singh Profile Image" class="profile-img">`;
+            // Create image element safely
+            const img = DOM.createElement('img', {
+                src: profileData.avatar_url,
+                alt: 'Ashutosh Singh Profile Image',
+                class: 'profile-img',
+                loading: 'eager',
+                decoding: 'async'
+            });
+            
+            // Add error handler for image loading failures
+            img.onerror = function() {
+                this.onerror = null;
+                this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Ccircle cx="12" cy="12" r="12" fill="%23333"/%3E%3Cpath d="M7 15v2h10v-2H7zm2-8h6v2H9V7z" fill="%23FFF"/%3E%3C/svg%3E';
+                this.alt = 'Profile Placeholder';
+            };
+            
+            // Clear placeholder and add image
+            profileImgPlaceholder.innerHTML = '';
+            profileImgPlaceholder.appendChild(img);
         }
     } catch (error) {
         console.error('Error fetching GitHub data:', error);
+        
+        // Provide fallback for profile image on error
+        const profileImgPlaceholder = document.querySelector('.profile-img-placeholder');
+        if (profileImgPlaceholder) {
+            profileImgPlaceholder.innerHTML = '<i class="fas fa-user-circle"></i>';
+        }
     }
 } 

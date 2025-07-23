@@ -1,63 +1,134 @@
-# Software Engineer Portfolio Website
+# Ashutosh Singh - Software Engineer Portfolio
 
-A modern, responsive portfolio website for a software engineering student, featuring GitHub projects integration, coding profiles, and dark/light theme toggle.
+A modern, secure and high-performance portfolio website showcasing professional experience, education, projects, and GitHub contributions.
 
 ## Features
 
+### Content Features
 - Responsive design that works on desktop, tablet, and mobile devices
-- Dark/light theme toggle with system preference detection
-- GitHub projects integration via GitHub API
-- LeetCode and Codeforces profile cards
-- Smooth scrolling navigation with mobile menu
-- Contact form with validation
-- Modern UI with animations and transitions
+- Professional education section with institution logos
+- GitHub statistics with real-time data
+- Dynamic news ticker for latest achievements
+- Internship & experience showcase
+- Education timeline with institutional branding
+- Project portfolio with interactive previews
+- Tech stack and skills visualization
+- Coding profiles integration (GitHub, LeetCode, CodeForces)
+
+### Technical Features
+- **Security & Privacy**
+  - Strong Content Security Policy (CSP)
+  - Protection against XSS attacks and clickjacking
+  - Subresource Integrity (SRI) for external resources
+  - Advanced sanitization of dynamic content
+  - Secure external links (rel="noopener noreferrer")
+  - Permissions Policy limiting access to sensitive browser features
+
+- **Performance Optimizations**
+  - Smart caching strategy with automatic version management
+  - Critical CSS inlining for faster initial rendering
+  - Resource preloading for key assets
+  - Progressive image loading with fallbacks
+  - Service Worker for offline capability
+  - Lazy loading of non-critical resources
+
+- **User Experience**
+  - Enhanced mobile menu animations
+  - Improved scrolling behavior
+  - Streamlined navigation
+  - Smart error handling with graceful fallbacks
+  - Animation performance optimizations
+  
+- **Developer Experience**
+  - Modular JavaScript architecture
+  - Centralized version management
+  - Automated cache invalidation
+  - Clean, semantic HTML structure
 
 ## Technologies Used
 
-- HTML5
-- CSS3 (with CSS variables and CSS Grid for layouts)
-- Vanilla JavaScript with ES6+ features
-- Intersection Observer API for scroll animations
-- GitHub API for projects
-- Codeforces API for profile data
-- Font Awesome icons
+- **Core Technologies**
+  - HTML5 with semantic markup
+  - CSS3 with modern features (Grid, Flexbox, Variables)
+  - Vanilla JavaScript with ES6+ features
+  
+- **Performance & Security**
+  - Service Workers for offline capabilities
+  - Intersection Observer API for efficient animations
+  - Content Security Policy (CSP)
+  - LocalStorage/SessionStorage for state management
+  - Cache API for resource management
+
+- **External Integrations**
+  - GitHub REST API for profile data
+  - Font Awesome for iconography
+  - Custom GitHub stats widgets
 
 ## Project Structure
 
 ```
 portfolio-site/
 │
-├── index.html          # Main HTML file with all sections
-├── styles.css          # CSS styles with dark/light theme
-├── script.js           # JavaScript with API integrations
-└── README.md           # Project documentation
+├── index.html          # Main HTML file with structured content and security headers
+├── styles.css          # CSS styles with optimized loading
+├── script.js           # Modern JavaScript with modular architecture
+├── sw.js               # Service Worker with advanced caching strategies
+└── README.md           # Comprehensive project documentation
 ```
 
-## API Integrations
+## Security Features
 
-- **GitHub API**: Fetches and displays the latest repositories
-- **Codeforces API**: Shows profile statistics
-- **LeetCode**: Shows profile statistics (mock implementation)
+### Content Security Policy (CSP)
+A strict CSP that allows content only from trusted sources:
+- Scripts only from same origin and cdnjs.cloudflare.com
+- Styles from same origin and cdnjs.cloudflare.com
+- Images from specific trusted domains
+- No inline scripts allowed (except those with nonces)
+- No dangerous eval() or Function constructors
+
+### Protection Headers
+- **X-Frame-Options**: Prevents clickjacking attacks
+- **X-Content-Type-Options**: Prevents MIME type sniffing
+- **Referrer-Policy**: Limits information leakage
+- **Permissions-Policy**: Restricts access to sensitive browser features
+- **Strict-Transport-Security**: Enforces HTTPS connections
+
+### Link Protection
+- All external links use rel="noopener noreferrer"
+- Protection against tabnabbing attacks
+
+### Content Sanitization
+- HTML content is sanitized before rendering
+- Allowlist-based approach for HTML tags and attributes
+- Safe DOM manipulation helpers prevent XSS vulnerabilities
+
+## Performance Optimizations
+
+### Resource Loading
+- CSS preloading for critical resources
+- Efficient font loading strategy
+- Optimized image loading with width/height attributes
+- Preconnect hints for external domains
+
+### Caching Strategy
+- Multiple cache levels for different resource types:
+  - Network-first for HTML/CSS/JS (always fresh)
+  - Cache-first for static assets (images, icons)
+  - Stale-while-revalidate for fonts and API data
+
+### Version Management
+- Centralized version control for resources
+- Automatic cache invalidation on deployments
+- Clean version transition without page reloads
 
 ## Getting Started
 
 1. Clone the repository
    ```
-   git clone https://github.com/nashutosh/Portfolio-Software-Enginner.git
+   git clone https://github.com/nashutosh/Portfolio-Software-Engineer.git
    ```
 
 2. Open `index.html` in your browser or use a local development server
-
-## Customization
-
-To customize this portfolio for your own use:
-
-1. Update personal information and links in `index.html`
-2. Modify API usernames in `script.js`:
-   - GitHub username (line 178)
-   - LeetCode username (in comments, line 219)
-   - Codeforces username (line 234)
-3. Customize colors and styles in the CSS variables section of `styles.css`
 
 ## Deployment
 
@@ -77,12 +148,7 @@ This portfolio website is compatible with all modern browsers including:
 - Safari
 - Edge
 
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
-
 ## Contact
 
 Ashutosh Singh - [LinkedIn](https://www.linkedin.com/in/ashutosh-singh-7945812b2/)
-
 GitHub: [https://github.com/nashutosh](https://github.com/nashutosh) 
