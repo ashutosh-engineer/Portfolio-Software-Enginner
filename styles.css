@@ -410,6 +410,8 @@ nav {
 @media (max-width: 480px) {
     .news-ticker-container {
         flex-direction: column;
+        height: auto;
+        overflow: visible;
     }
     
     .news-ticker-label {
@@ -418,6 +420,7 @@ nav {
         position: relative;
         z-index: 20;
         border-radius: 0;
+        display: flex;
     }
     
     .news-ticker-label::after {
@@ -440,8 +443,53 @@ nav {
         width: 100%;
     }
     
+    .news-ticker {
+        padding: 15px 10px;
+        width: 100%;
+        height: auto;
+    }
+    
+    .news-ticker-content {
+        animation: marquee-mobile 30s linear infinite;
+        padding-right: 20px;
+    }
+    
+    @keyframes marquee-mobile {
+        0% {
+            transform: translateX(100%);
+        }
+        100% {
+            transform: translateX(-300%);
+        }
+    }
+    
     .ticker-item {
         font-size: 0.85rem;
+        margin-right: 60px;
+        white-space: normal;
+        display: inline-flex;
+        align-items: center;
+        line-height: 1.4;
+        flex-shrink: 0;
+    }
+}
+
+/* Additional fixes for mobile views at the bottom of the file */
+@media (max-width: 480px) {
+    /* Ensure proper display of ticker content on mobile */
+    .news-ticker {
+        overflow-x: hidden;
+        width: 100%;
+    }
+    
+    /* Make the "What's New" button more visible */
+    .news-ticker-label {
+        background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        font-weight: bold;
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
 }
 
