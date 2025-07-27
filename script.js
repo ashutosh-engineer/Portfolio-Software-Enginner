@@ -318,7 +318,7 @@ function initNewsTicker() {
         const newDuration = newIsMobile 
             ? Math.max(25, tickerContent.scrollWidth / 60)
             : Math.max(15, tickerContent.scrollWidth / 120);
-        
+            
         tickerContent.style.animationDuration = `${newDuration}s`;
         
         // Update spacing on resize
@@ -328,65 +328,6 @@ function initNewsTicker() {
             item.style.paddingLeft = newIsMobile ? '15px' : '';
             item.style.paddingRight = newIsMobile ? '15px' : '';
         });
-    });
-
-    // --- ENHANCED INTERACTIVITY ---
-    // Pause/resume on hover or focus
-    function pauseTicker() {
-        tickerContent.style.animationPlayState = 'paused';
-    }
-    function resumeTicker() {
-        tickerContent.style.animationPlayState = 'running';
-    }
-    tickerContent.addEventListener('mouseenter', pauseTicker);
-    tickerContent.addEventListener('mouseleave', resumeTicker);
-    tickerContent.addEventListener('focusin', pauseTicker);
-    tickerContent.addEventListener('focusout', resumeTicker);
-
-    // Manual navigation with arrows
-    const leftArrow = document.querySelector('.ticker-arrow.left');
-    const rightArrow = document.querySelector('.ticker-arrow.right');
-    let scrollIndex = 0;
-    const items = tickerContent.querySelectorAll('.ticker-item');
-    function scrollToItem(index) {
-        if (items.length === 0) return;
-        scrollIndex = (index + items.length) % items.length;
-        const item = items[scrollIndex];
-        if (item) {
-            tickerContent.scrollTo({
-                left: item.offsetLeft - 20,
-                behavior: 'smooth'
-            });
-        }
-    }
-    if (leftArrow && rightArrow) {
-        leftArrow.addEventListener('click', (e) => {
-            e.preventDefault();
-            scrollToItem(scrollIndex - 1);
-        });
-        rightArrow.addEventListener('click', (e) => {
-            e.preventDefault();
-            scrollToItem(scrollIndex + 1);
-        });
-        // Keyboard accessibility
-        leftArrow.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                scrollToItem(scrollIndex - 1);
-            }
-        });
-        rightArrow.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                scrollToItem(scrollIndex + 1);
-            }
-        });
-    }
-    // Add tooltips to ticker items for clarity
-    document.querySelectorAll('.ticker-item').forEach(item => {
-        if (!item.title) {
-            item.title = item.textContent.trim();
-        }
     });
 }
 
@@ -472,14 +413,6 @@ function initEventsModal() {
         modal.classList.remove('show');
         document.body.style.overflow = ''; // Restore scrolling
         console.log('Modal closed via X button');
-    });
-    // Keyboard accessibility for close button
-    closeModal.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            modal.classList.remove('show');
-            document.body.style.overflow = '';
-            e.preventDefault();
-        }
     });
     
     // Close modal when clicking outside the modal content
