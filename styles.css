@@ -2178,3 +2178,90 @@ nav {
         padding: 6px 8px;
     }
 } 
+
+/* --- News Ticker Enhancements --- */
+.animated-badge {
+  animation: bellPulse 1.2s infinite alternate;
+  color: var(--accent-color);
+  margin-left: 6px;
+}
+@keyframes bellPulse {
+  0% { filter: drop-shadow(0 0 0px var(--accent-color)); }
+  100% { filter: drop-shadow(0 0 8px var(--accent-color)); }
+}
+.news-badge {
+  display: inline-block;
+  background: var(--accent-color);
+  color: #fff;
+  font-size: 0.7em;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  text-align: center;
+  line-height: 16px;
+  margin-left: 8px;
+  box-shadow: 0 0 8px var(--accent-color);
+  animation: badgeGlow 1.5s infinite alternate;
+}
+@keyframes badgeGlow {
+  0% { box-shadow: 0 0 8px var(--accent-color); }
+  100% { box-shadow: 0 0 16px var(--accent-color); }
+}
+.news-ticker-controls {
+  display: flex;
+  align-items: center;
+  margin: 0 8px;
+}
+.ticker-arrow {
+  background: rgba(255,255,255,0.08);
+  border: none;
+  border-radius: 50%;
+  color: var(--primary-color);
+  width: 32px;
+  height: 32px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin: 0 2px;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.ticker-arrow:hover, .ticker-arrow:focus {
+  background: var(--primary-color);
+  color: #fff;
+  outline: none;
+}
+.news-logo {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  border-radius: 4px;
+  margin-right: 8px;
+  vertical-align: middle;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+}
+/* --- Modal Enhancements --- */
+.modal-badge {
+  display: inline-block;
+  background: var(--accent-color);
+  color: #fff;
+  font-size: 0.7em;
+  border-radius: 12px;
+  padding: 2px 10px;
+  margin-left: 10px;
+  vertical-align: middle;
+  animation: badgeGlow 1.5s infinite alternate;
+}
+.news-logo-table {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  border-radius: 3px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+/* --- Highlight most recent row in modal --- */
+.highlight-row {
+  background: rgba(255, 255, 255, 0.08);
+  font-weight: 600;
+  border-left: 4px solid var(--accent-color);
+} 
