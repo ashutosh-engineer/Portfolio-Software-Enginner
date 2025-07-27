@@ -135,41 +135,52 @@
 
     <!-- News Ticker -->
     <div class="news-ticker-container">
-        <div class="news-ticker-label" id="whats-new-label" role="button" tabindex="0" aria-haspopup="dialog">
-            <span>What's New <i class="fas fa-chevron-circle-right"></i></span>
+        <div class="news-ticker-label" id="whats-new-label" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Open recent news and achievements">
+            <span>What's New <i class="fas fa-bell animated-badge" title="New updates!"></i></span>
+            <span class="news-badge" aria-label="New">●</span>
+        </div>
+        <div class="news-ticker-controls">
+            <button class="ticker-arrow left" aria-label="Previous news item"><i class="fas fa-chevron-left"></i></button>
         </div>
         <div class="news-ticker">
             <div class="news-ticker-content">
                 <span class="ticker-item">
+                    <img src="https://leetcode.com/static/images/LeetCode_logo.png" alt="LeetCode Logo" class="news-logo" />
                     <i class="fas fa-trophy"></i> 
-                    Achieved Global Rank 487 in LeetCode Biweekly Contest 161: <a href="https://leetcode.com/u/Ashu054/" target="_blank">View Profile</a> 
+                    Ranked Top 500 Globally in LeetCode Biweekly Contest 161: <a href="https://leetcode.com/u/Ashu054/" target="_blank">View Profile</a> 
                     <span class="ticker-date">Aug 2024</span>
                 </span>
                 <span class="ticker-item">
+                    <img src="https://avatars.githubusercontent.com/u/916923?v=4" alt="OWASP Logo" class="news-logo" />
                     <i class="fas fa-check-circle"></i> 
-                    Solved issue #506 (Gap Analysis & Matching Optimization) in OWASP in repo OpenCRE: <a href="https://github.com/OWASP/OpenCRE/pull/617" target="_blank">PR #617</a> 
+                    Solved #506 (Gap Analysis & Matching Optimization) in OWASP OpenCRE: <a href="https://github.com/OWASP/OpenCRE/pull/617" target="_blank">PR #617</a> 
                     <span class="ticker-date">Jul 24, 2024</span>
                 </span>
                 <span class="ticker-item">
+                    <img src="https://avatars.githubusercontent.com/u/916923?v=4" alt="OWASP Logo" class="news-logo" />
                     <i class="fas fa-check-circle"></i> 
-                    Solved issue #585 (Automatic Mapping of Standards to CREs) in OWASP in repo OpenCRE: <a href="https://github.com/OWASP/OpenCRE/pull/618" target="_blank">PR #618</a> 
+                    Solved #585 (Automatic Mapping of Standards to CREs) in OWASP OpenCRE: <a href="https://github.com/OWASP/OpenCRE/pull/618" target="_blank">PR #618</a> 
                     <span class="ticker-date">Jul 24, 2024</span>
                 </span>
                 <span class="ticker-item">
+                    <img src="https://avatars.githubusercontent.com/u/916923?v=4" alt="OWASP Logo" class="news-logo" />
                     <i class="fas fa-check-circle"></i> 
-                    Solved issue #614 in OWASP in repo OpenCRE: <a href="https://github.com/OWASP/OpenCRE/pulls" target="_blank">View Pull Request</a> 
+                    Solved #614 in OWASP OpenCRE: <a href="https://github.com/OWASP/OpenCRE/pulls" target="_blank">View Pull Request</a> 
                     <span class="ticker-date">Jul 23, 2024</span>
                 </span>
             </div>
         </div>
+        <div class="news-ticker-controls">
+            <button class="ticker-arrow right" aria-label="Next news item"><i class="fas fa-chevron-right"></i></button>
+        </div>
     </div>
     
     <!-- Modal for What's New Events -->
-    <div id="events-modal" class="modal">
+    <div id="events-modal" class="modal" aria-modal="true" role="dialog" aria-labelledby="modal-title">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Recent Contributions & Achievements</h2>
-                <span class="close-modal">&times;</span>
+                <h2 id="modal-title">Recent Contributions & Achievements <span class="modal-badge">New</span></h2>
+                <span class="close-modal" role="button" tabindex="0" aria-label="Close modal">&times;</span>
             </div>
             <div class="modal-body">
                 <div class="table-container">
@@ -185,18 +196,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr class="highlight-row">
                                 <td>Aug 2024</td>
                                 <td>LeetCode Biweekly Contest 161</td>
-                                <td>LeetCode</td>
+                                <td><img src="https://leetcode.com/static/images/LeetCode_logo.png" alt="LeetCode Logo" class="news-logo-table" /> LeetCode</td>
                                 <td>Contest</td>
-                                <td>Achieved Global Rank 487</td>
+                                <td>Ranked Top 500 Globally</td>
                                 <td><a href="https://leetcode.com/u/Ashu054/" target="_blank" class="btn btn-sm">View Profile</a></td>
                             </tr>
                             <tr>
                                 <td>Jul 24, 2024</td>
                                 <td>Solved Issue #506</td>
-                                <td>OWASP</td>
+                                <td><img src="https://avatars.githubusercontent.com/u/916923?v=4" alt="OWASP Logo" class="news-logo-table" /> OWASP</td>
                                 <td>OpenCRE</td>
                                 <td>Gap Analysis & Matching Optimization</td>
                                 <td><a href="https://github.com/OWASP/OpenCRE/pull/617" target="_blank" class="btn btn-sm">View PR #617</a></td>
@@ -204,7 +215,7 @@
                             <tr>
                                 <td>Jul 24, 2024</td>
                                 <td>Solved Issue #585</td>
-                                <td>OWASP</td>
+                                <td><img src="https://avatars.githubusercontent.com/u/916923?v=4" alt="OWASP Logo" class="news-logo-table" /> OWASP</td>
                                 <td>OpenCRE</td>
                                 <td>Automatic Mapping of Standards to CREs</td>
                                 <td><a href="https://github.com/OWASP/OpenCRE/pull/618" target="_blank" class="btn btn-sm">View PR #618</a></td>
@@ -212,7 +223,7 @@
                             <tr>
                                 <td>Jul 23, 2024</td>
                                 <td>Solved Issue #614</td>
-                                <td>OWASP</td>
+                                <td><img src="https://avatars.githubusercontent.com/u/916923?v=4" alt="OWASP Logo" class="news-logo-table" /> OWASP</td>
                                 <td>OpenCRE</td>
                                 <td>Core Framework Enhancements</td>
                                 <td><a href="https://github.com/OWASP/OpenCRE/pulls" target="_blank" class="btn btn-sm">View PR</a></td>
