@@ -357,15 +357,55 @@ function initEventsModal() {
         console.log('Modal opened');
     };
     
-    // Open modal when clicking on What's New label (multiple event types for better mobile support)
-    whatsNewLabel.addEventListener('click', openModalFunction);
-    whatsNewLabel.addEventListener('touchstart', openModalFunction, {passive: false});
+    // Improved mobile touch handling
+    let touchStarted = false;
     
-    // Make sure the entire label area is clickable
+    // Handle touch events for mobile
+    whatsNewLabel.addEventListener('touchstart', (e) => {
+        touchStarted = true;
+        e.preventDefault();
+        e.stopPropagation();
+    }, {passive: false});
+    
+    whatsNewLabel.addEventListener('touchend', (e) => {
+        if (touchStarted) {
+            e.preventDefault();
+            e.stopPropagation();
+            openModalFunction(e);
+            touchStarted = false;
+        }
+    }, {passive: false});
+    
+    // Handle click events for desktop (only if not a touch device or touch didn't occur)
+    whatsNewLabel.addEventListener('click', (e) => {
+        if (!touchStarted) {
+            openModalFunction(e);
+        }
+    });
+    
+    // Make sure the entire label area is clickable - apply same logic to span
     const labelSpan = whatsNewLabel.querySelector('span');
     if (labelSpan) {
-        labelSpan.addEventListener('click', openModalFunction);
-        labelSpan.addEventListener('touchstart', openModalFunction, {passive: false});
+        labelSpan.addEventListener('touchstart', (e) => {
+            touchStarted = true;
+            e.preventDefault();
+            e.stopPropagation();
+        }, {passive: false});
+        
+        labelSpan.addEventListener('touchend', (e) => {
+            if (touchStarted) {
+                e.preventDefault();
+                e.stopPropagation();
+                openModalFunction(e);
+                touchStarted = false;
+            }
+        }, {passive: false});
+        
+        labelSpan.addEventListener('click', (e) => {
+            if (!touchStarted) {
+                openModalFunction(e);
+            }
+        });
     }
     
     // Close modal when clicking on X button
