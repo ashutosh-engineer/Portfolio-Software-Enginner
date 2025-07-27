@@ -2102,10 +2102,14 @@ nav {
     
     .news-ticker-label {
         width: 100%;
-        padding: 12px 15px;
+        padding: 15px 20px;
         position: relative;
         z-index: 20;
         border-radius: 0;
+        min-height: 48px; /* Ensure minimum touch target size */
+        touch-action: manipulation; /* Optimize for touch */
+        -webkit-tap-highlight-color: rgba(109, 142, 255, 0.3); /* Add tap highlight */
+        user-select: none; /* Prevent text selection on touch */
     }
     
     .news-ticker-label::after {
@@ -2126,6 +2130,13 @@ nav {
         align-items: center;
         justify-content: center;
         width: 100%;
+        pointer-events: none; /* Let parent handle all events */
+    }
+    
+    /* Improve mobile button interaction */
+    .news-ticker-label:active {
+        background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        transform: scale(0.98);
     }
     
     /* Ensure ticker items are visible on mobile */
