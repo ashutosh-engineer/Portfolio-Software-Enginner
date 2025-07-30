@@ -343,45 +343,6 @@ function initNewsTicker() {
     tickerContent.addEventListener('focusin', pauseTicker);
     tickerContent.addEventListener('focusout', resumeTicker);
 
-    // Manual navigation with arrows
-    const leftArrow = document.querySelector('.ticker-arrow.left');
-    const rightArrow = document.querySelector('.ticker-arrow.right');
-    let scrollIndex = 0;
-    const items = tickerContent.querySelectorAll('.ticker-item');
-    function scrollToItem(index) {
-        if (items.length === 0) return;
-        scrollIndex = (index + items.length) % items.length;
-        const item = items[scrollIndex];
-        if (item) {
-            tickerContent.scrollTo({
-                left: item.offsetLeft - 20,
-                behavior: 'smooth'
-            });
-        }
-    }
-    if (leftArrow && rightArrow) {
-        leftArrow.addEventListener('click', (e) => {
-            e.preventDefault();
-            scrollToItem(scrollIndex - 1);
-        });
-        rightArrow.addEventListener('click', (e) => {
-            e.preventDefault();
-            scrollToItem(scrollIndex + 1);
-        });
-        // Keyboard accessibility
-        leftArrow.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                scrollToItem(scrollIndex - 1);
-            }
-        });
-        rightArrow.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                scrollToItem(scrollIndex + 1);
-            }
-        });
-    }
     // Add tooltips to ticker items for clarity
     document.querySelectorAll('.ticker-item').forEach(item => {
         if (!item.title) {
