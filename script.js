@@ -481,7 +481,7 @@ function sanitizeHTML(html) {
 
 // Function to fetch GitHub data (avatar only)
 async function fetchGitHubData() {
-    const username = 'nashutosh';
+    const username = 'ashutosh-engineer';
     
     try {
         // Fetch user profile information
@@ -521,4 +521,4 @@ async function fetchGitHubData() {
             profileImgPlaceholder.innerHTML = '<i class="fas fa-user-circle"></i>';
         }
     }
-} 
+}

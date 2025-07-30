@@ -125,7 +125,7 @@ A strict CSP that allows content only from trusted sources:
 
 1. Clone the repository
    ```
-   git clone https://github.com/nashutosh/Portfolio-Software-Engineer.git
+   git clone https://github.com/ashutosh-engineer/Portfolio-Software-Engineer.git
    ```
 
 2. Open `index.html` in your browser or use a local development server
@@ -151,4 +151,4 @@ This portfolio website is compatible with all modern browsers including:
 ## Contact
 
 Ashutosh Singh - [LinkedIn](https://www.linkedin.com/in/ashutosh-singh-7945812b2/)
-GitHub: [https://github.com/nashutosh](https://github.com/nashutosh) 
+GitHub: [https://github.com/ashutosh-engineer](https://github.com/ashutosh-engineer)
